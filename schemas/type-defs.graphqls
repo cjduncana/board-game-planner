@@ -1,0 +1,4 @@
+type Query {
+  "Search for Board Games based on given query"
+  boardGames(query: String!): [BoardGame!]!
+}

@@ -1,0 +1,9 @@
+type BoardGame {
+  id: ID!
+  name: String!
+  description: String!
+  minimumAmountOfPlayers: Int!
+  maximumAmountOfPlayers: Int!
+  thumbnailUrl: String
+  imageUrl: String
+}
