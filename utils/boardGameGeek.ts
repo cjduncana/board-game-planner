@@ -6,6 +6,7 @@ export async function searchBoardGameIds(query: string): Promise<string[]> {
     `https://api.geekdo.com/xmlapi2/search?type=boardgame,boardgameexpansion&query=${query}`
   )
 
+  // TODO: Ensure this doesn't break if there's no "item" array
   return res.items.item.map(mapSearch)
 }
 
@@ -22,6 +23,7 @@ export async function fetchBoardGamesById(ids: string[]): Promise<BoardGame[]> {
 }
 
 function formatThingResponse(response: ThingResponse): BoardGame[] {
+  // TODO: Ensure this doesn't break if there's no "item" array
   return response.items.item.map(mapThing)
 }
 

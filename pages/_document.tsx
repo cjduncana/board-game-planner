@@ -1,4 +1,5 @@
 import { ServerStyleSheets } from '@material-ui/core/styles'
+import { RenderPageResult } from 'next/dist/next-server/lib/utils'
 import Document, { DocumentContext, DocumentInitialProps } from 'next/document'
 import React from 'react'
 
@@ -7,9 +8,9 @@ export default class MyDocument extends Document {
     const sheets = new ServerStyleSheets()
     const originalRenderPage = ctx.renderPage
 
-    ctx.renderPage = () =>
+    ctx.renderPage = (): RenderPageResult | Promise<RenderPageResult> =>
       originalRenderPage({
-        enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+        enhanceApp: (App) => (props): React.ReactElement => sheets.collect(<App {...props} />),
       })
 
     const initialProps = await Document.getInitialProps(ctx)

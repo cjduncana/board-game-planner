@@ -1,5 +1,6 @@
 import 'fontsource-roboto'
 
+import { ApolloProvider } from '@apollo/client'
 import AppBar from '@material-ui/core/AppBar'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -10,9 +11,12 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import React from 'react'
 
+import { useApollo } from '../lib/apollo'
+
 export default function App(props: AppProps): JSX.Element {
 
   const classes = useStyles()
+  const client = useApollo(props.pageProps.initialApolloState)
 
   return (
     <React.Fragment>
@@ -33,7 +37,9 @@ export default function App(props: AppProps): JSX.Element {
         </Toolbar>
       </AppBar>
       <main>
-        <props.Component {...props.pageProps} />
+        <ApolloProvider client={client}>
+          <props.Component {...props.pageProps} />
+        </ApolloProvider>
       </main>
     </React.Fragment>
   )

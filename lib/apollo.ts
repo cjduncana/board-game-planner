@@ -1,14 +1,13 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import { IncomingMessage, ServerResponse } from 'http'
 import {
   ApolloClient,
+  ApolloLink,
   InMemoryCache,
-  HttpLink,
   NormalizedCacheObject,
 } from '@apollo/client'
-import { SchemaLink } from '@apollo/client/link/schema'
 import { useMemo } from 'react'
-
-import { schema } from './schema'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined
 
@@ -17,10 +16,13 @@ export type ResolverContext = {
   res?: ServerResponse
 }
 
-function createIsomorphLink(context: ResolverContext = {}) {
+function createIsomorphLink(context: ResolverContext = {}): ApolloLink | undefined {
   if (typeof window === 'undefined') {
+    const { SchemaLink } = require('@apollo/client/link/schema')
+    const { schema } = require('./schema')
     return new SchemaLink({ schema, context })
   } else {
+    const { HttpLink } = require('@apollo/client')
     return new HttpLink({
       uri: '/api/graphql',
       credentials: 'same-origin',
@@ -28,7 +30,7 @@ function createIsomorphLink(context: ResolverContext = {}) {
   }
 }
 
-function createApolloClient(context?: ResolverContext) {
+function createApolloClient(context?: ResolverContext): ApolloClient<NormalizedCacheObject> {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: createIsomorphLink(context),

@@ -1,0 +1,8 @@
+query BoardGames($query: String!) {
+  boardGames(query: $query) {
+    id
+    name
+    description
+    imageUrl
+  }
+}
