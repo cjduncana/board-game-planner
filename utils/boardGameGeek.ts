@@ -1,13 +1,17 @@
 import { BoardGame } from '../schemas/type-defs.graphqls'
+import Url from '../utils/urls'
 import { fetchXml } from '.'
 
 export async function searchBoardGameIds(query: string): Promise<string[]> {
   const res = await fetchXml<SearchResponse>(
-    `https://api.geekdo.com/xmlapi2/search?type=boardgame,boardgameexpansion&query=${query}`
+    `${Url.BOARD_GAME_SEARCH}&query=${query}`
   )
 
-  // TODO: Ensure this doesn't break if there's no "item" array
-  return res.items.item.map(mapSearch)
+  if (Array.isArray(res.items.item)) {
+    return res.items.item.map(mapSearch)
+  }
+
+  return res.items.item ? [mapSearch(res.items.item)] : []
 }
 
 function mapSearch(search: ItemInSearchResponse): string {
@@ -16,15 +20,18 @@ function mapSearch(search: ItemInSearchResponse): string {
 
 export async function fetchBoardGamesById(ids: string[]): Promise<BoardGame[]> {
   const res = await fetchXml<ThingResponse>(
-    `https://api.geekdo.com/xmlapi2/thing?id=${ids.join(',')}`
+    `${Url.BOARD_GAME_THING}?id=${ids.join(',')}`
   )
 
   return formatThingResponse(res)
 }
 
 function formatThingResponse(response: ThingResponse): BoardGame[] {
-  // TODO: Ensure this doesn't break if there's no "item" array
-  return response.items.item.map(mapThing)
+  if (Array.isArray(response.items.item)) {
+    return response.items.item.map(mapThing)
+  }
+
+  return response.items.item ? [mapThing(response.items.item)] : []
 }
 
 function mapThing(thing: ItemInThingResponse): BoardGame {
@@ -53,7 +60,7 @@ function findPrimaryName(name: NameInItem): boolean {
 }
 
 interface SearchResponse {
-  items: { item: ItemInSearchResponse[] }
+  items: { item?: ItemInSearchResponse | ItemInSearchResponse[] }
 }
 
 interface ItemInSearchResponse {
@@ -61,7 +68,7 @@ interface ItemInSearchResponse {
 }
 
 interface ThingResponse {
-  items: { item: ItemInThingResponse[] }
+  items: { item?: ItemInThingResponse | ItemInThingResponse[] }
 }
 
 interface ItemInThingResponse {
