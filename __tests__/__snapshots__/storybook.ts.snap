@@ -2,10 +2,10 @@
 
 exports[`Storyshots MediaCard With Image 1`] = `
 <div
-  className="MuiPaper-root MuiCard-root makeStyles-card-1 MuiPaper-elevation1 MuiPaper-rounded"
+  className="MuiPaper-root MuiCard-root makeStyles-card MuiPaper-elevation1 MuiPaper-rounded"
 >
   <div
-    className="MuiCardMedia-root makeStyles-cardMedia-2"
+    className="MuiCardMedia-root makeStyles-cardMedia"
     style={
       Object {
         "backgroundImage": "url(\\"https://cf.geekdo-images.com/S3ybV1LAp-8SnHIXLLjVqA__original/img/j-pfXZ_0GmOowohzD_T6NDAWGSA=/0x0/pic1534148.jpg\\")",
@@ -14,15 +14,15 @@ exports[`Storyshots MediaCard With Image 1`] = `
     title="Pandemic"
   />
   <div
-    className="MuiCardContent-root makeStyles-cardContent-3"
+    className="MuiCardContent-root makeStyles-cardContent"
   >
     <h2
-      className="MuiTypography-root makeStyles-title-4 MuiTypography-h5 MuiTypography-gutterBottom"
+      className="MuiTypography-root makeStyles-title MuiTypography-h5 MuiTypography-gutterBottom"
     >
       Pandemic
     </h2>
     <p
-      className="MuiTypography-root makeStyles-description-5 MuiTypography-body1"
+      className="MuiTypography-root makeStyles-description MuiTypography-body1"
     >
       In Pandemic, several virulent diseases have broken out simultaneously all over the world! The players are disease-fighting specialists whose mission is to treat disease hotspots while researching cures for each of four plagues before they get out of hand.
 
@@ -40,10 +40,10 @@ Pandemic is the first game in the Pandemic series.
 
 exports[`Storyshots MediaCard With Out Image 1`] = `
 <div
-  className="MuiPaper-root MuiCard-root makeStyles-card-6 MuiPaper-elevation1 MuiPaper-rounded"
+  className="MuiPaper-root MuiCard-root makeStyles-card MuiPaper-elevation1 MuiPaper-rounded"
 >
   <span
-    className="MuiSkeleton-root MuiSkeleton-text makeStyles-cardMedia-7 MuiSkeleton-pulse"
+    className="MuiSkeleton-root MuiSkeleton-text makeStyles-cardMedia MuiSkeleton-pulse"
     style={
       Object {
         "height": undefined,
@@ -52,15 +52,15 @@ exports[`Storyshots MediaCard With Out Image 1`] = `
     }
   />
   <div
-    className="MuiCardContent-root makeStyles-cardContent-8"
+    className="MuiCardContent-root makeStyles-cardContent"
   >
     <h2
-      className="MuiTypography-root makeStyles-title-9 MuiTypography-h5 MuiTypography-gutterBottom"
+      className="MuiTypography-root makeStyles-title MuiTypography-h5 MuiTypography-gutterBottom"
     >
       Catan: First Adventure Print & Play
     </h2>
     <p
-      className="MuiTypography-root makeStyles-description-10 MuiTypography-body1"
+      className="MuiTypography-root makeStyles-description MuiTypography-body1"
     >
       The kids on Catan are very adventurous. They learn to sail at a very young age and like to spend their time sailing around the small offshore islands and playing exciting games. Today you are playing pirates.
 

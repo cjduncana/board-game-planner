@@ -6,6 +6,7 @@ import {
   BaseMeta,
 } from '@storybook/addons'
 import { StoryFnReactReturnType } from '@storybook/react/dist/client/preview/types'
+import { Rule, StyleSheet } from 'jss'
 import TestRenderer from 'react-test-renderer'
 
 interface ArgType<T> extends OriginalArgType {
@@ -29,6 +30,10 @@ export interface MockedResponse<Data, Variables> extends OriginalMockedResponse 
 
 interface GraphQLRequest<Variables> extends OriginalGraphQLRequest {
   variables?: Variables;
+}
+
+export function generateClassName(rule: Rule, sheet?: StyleSheet<string>): string {
+  return `${sheet?.options.classNamePrefix}-${rule.key}`
 }
 
 export function wait(miliseconds = 0): Promise<void> {

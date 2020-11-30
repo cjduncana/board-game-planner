@@ -3,6 +3,7 @@
  */
 
 import { MockedProvider } from '@apollo/client/testing'
+import { StylesProvider } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import Input from '@material-ui/core/Input'
 import { RouterContext } from 'next/dist/next-server/lib/router-context'
@@ -14,7 +15,7 @@ import { nextRouter } from '../../__mocks__'
 import { baseEvent, createInputEvent } from '../../__mocks__/events'
 import Index from '../../pages'
 import { mockedBoardGames } from '../../schemas/__mock__/boardGame.graphql'
-import { wait } from '../../utils/testHelpers'
+import { generateClassName, wait } from '../../utils/testHelpers'
 
 // TODO: Fix Image: Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
 // TODO: Fix MockedProvider randomly returning the BE result
@@ -130,7 +131,9 @@ function Wrapped(props: WrappedProps): JSX.Element {
   return (
     <RouterContext.Provider value={props.router ?? mockedRouter}>
       <MockedProvider mocks={[mockedBoardGames]}>
-        <Index />
+        <StylesProvider generateClassName={generateClassName}>
+          <Index />
+        </StylesProvider>
       </MockedProvider>
     </RouterContext.Provider>
   )
