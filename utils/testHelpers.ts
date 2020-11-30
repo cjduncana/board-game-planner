@@ -1,11 +1,19 @@
 import { FetchResult, GraphQLRequest as OriginalGraphQLRequest } from '@apollo/client'
 import { MockedResponse as OriginalMockedResponse } from '@apollo/client/testing'
-import { Annotations as OriginalAnnotations, ArgType, BaseMeta } from '@storybook/addons'
+import {
+  Annotations as OriginalAnnotations,
+  ArgType as OriginalArgType,
+  BaseMeta,
+} from '@storybook/addons'
 import { StoryFnReactReturnType } from '@storybook/react/dist/client/preview/types'
 import TestRenderer from 'react-test-renderer'
 
+interface ArgType<T> extends OriginalArgType {
+  defaultValue?: T
+}
+
 type ArgTypes<Args> = {
-  [P in keyof Args]?: ArgType
+  [P in keyof Args]?: ArgType<Args[P]>
 }
 
 interface Annotations<Args, StoryFnReturnType> extends Omit<OriginalAnnotations<Args, StoryFnReturnType>, 'argTypes'> {

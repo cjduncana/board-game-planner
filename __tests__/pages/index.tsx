@@ -40,6 +40,18 @@ describe('Index page', () => {
     expect(input.props.value).toEqual('Catan')
   })
 
+  it('should do nothing if there\'s no new query', () => {
+    const { root } = TestRenderer.create(<Wrapped />)
+
+    const form = root.findByType('form')
+
+    expect(mockPush).not.toHaveBeenCalled()
+
+    form.props.onSubmit(baseEvent)
+
+    expect(mockPush).not.toHaveBeenCalled()
+  })
+
   it('should update the router with the new query when the User submit the search', () => {
     const { root } = TestRenderer.create(<Wrapped />)
 
