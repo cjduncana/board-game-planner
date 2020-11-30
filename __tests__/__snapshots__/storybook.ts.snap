@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Unsplash Default 1`] = `
+Array [
+  <span>
+    Photo by 
+    <a
+      href="https://unsplash.com/@jacielmelnik?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+      rel="noreferrer"
+      target="_blank"
+    >
+      Jaciel Melnik
+    </a>
+     on 
+    <a
+      href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+      rel="noreferrer"
+      target="_blank"
+    >
+      Unsplash
+    </a>
+  </span>,
+  <div
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "display": "block",
+        "margin": 0,
+        "overflow": "hidden",
+        "position": "relative",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "boxSizing": "border-box",
+          "display": "block",
+          "paddingTop": "56.09375%",
+        }
+      }
+    />
+    <img
+      alt="The Green Meeples"
+      decoding="async"
+      sizes="(max-width: 640px) 640px, (max-width: 750px) 750px, (max-width: 828px) 828px, (max-width: 1080px) 1080px, (max-width: 1200px) 1200px, (max-width: 1920px) 1920px, (max-width: 2048px) 2048px, 3840px"
+      src="/_next/image?url=%2Fgreen-meeples.jpg&w=3840&q=75"
+      srcSet="/_next/image?url=%2Fgreen-meeples.jpg&w=640&q=75 640w, /_next/image?url=%2Fgreen-meeples.jpg&w=750&q=75 750w, /_next/image?url=%2Fgreen-meeples.jpg&w=828&q=75 828w, /_next/image?url=%2Fgreen-meeples.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fgreen-meeples.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fgreen-meeples.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fgreen-meeples.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fgreen-meeples.jpg&w=3840&q=75 3840w"
+      style={
+        Object {
+          "border": "none",
+          "bottom": 0,
+          "boxSizing": "border-box",
+          "display": "block",
+          "height": 0,
+          "left": 0,
+          "margin": "auto",
+          "maxHeight": "100%",
+          "maxWidth": "100%",
+          "minHeight": "100%",
+          "minWidth": "100%",
+          "objectFit": undefined,
+          "objectPosition": undefined,
+          "padding": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "visibility": "visible",
+          "width": 0,
+        }
+      }
+    />
+  </div>,
+]
+`;

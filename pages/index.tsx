@@ -10,10 +10,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
 import Skeleton from '@material-ui/lab/Skeleton'
 import he from 'he'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React from 'react'
 
+import Unsplash from '../components/Unsplash'
 import {
   BoardGamesQuery,
   useBoardGamesLazyQuery,
@@ -83,17 +83,16 @@ export default function Index(): JSX.Element {
         (
           <Body boardGames={boardGameResult.data?.boardGames} />
         ) : (
-          // TODO: Turn into Unsplash component
-          <React.Fragment>
-            <span>Photo by <a href="https://unsplash.com/@jacielmelnik?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noreferrer">Jaciel Melnik</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noreferrer">Unsplash</a></span>
-            <Image
-              src="/green-meeples.jpg"
-              alt="The Green Meeples"
-              width={640}
-              height={359}
-              layout="responsive"
-            />
-          </React.Fragment>
+          <Unsplash
+            username="jacielmelnik"
+            fullName="Jaciel Melnik"
+            src="/green-meeples.jpg"
+            alt="The Green Meeples"
+            layout="responsive"
+            width={640}
+            height={359}
+            priority
+          />
         )
       }
     </React.Fragment>

@@ -88,7 +88,9 @@ Array [
     <img
       alt="The Green Meeples"
       decoding="async"
-      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      sizes="(max-width: 640px) 640px, (max-width: 750px) 750px, (max-width: 828px) 828px, (max-width: 1080px) 1080px, (max-width: 1200px) 1200px, (max-width: 1920px) 1920px, (max-width: 2048px) 2048px, 3840px"
+      src="/_next/image?url=%2Fgreen-meeples.jpg&w=3840&q=75"
+      srcSet="/_next/image?url=%2Fgreen-meeples.jpg&w=640&q=75 640w, /_next/image?url=%2Fgreen-meeples.jpg&w=750&q=75 750w, /_next/image?url=%2Fgreen-meeples.jpg&w=828&q=75 828w, /_next/image?url=%2Fgreen-meeples.jpg&w=1080&q=75 1080w, /_next/image?url=%2Fgreen-meeples.jpg&w=1200&q=75 1200w, /_next/image?url=%2Fgreen-meeples.jpg&w=1920&q=75 1920w, /_next/image?url=%2Fgreen-meeples.jpg&w=2048&q=75 2048w, /_next/image?url=%2Fgreen-meeples.jpg&w=3840&q=75 3840w"
       style={
         Object {
           "border": "none",
@@ -108,7 +110,7 @@ Array [
           "position": "absolute",
           "right": 0,
           "top": 0,
-          "visibility": "hidden",
+          "visibility": "visible",
           "width": 0,
         }
       }
