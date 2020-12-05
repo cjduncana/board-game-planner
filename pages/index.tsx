@@ -1,20 +1,21 @@
 import Container from '@material-ui/core/Container'
-import Grid from '@material-ui/core/Grid'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
-import he from 'he'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import MediaCard from '../components/MediaCard'
+import MediaGrid from '../components/MediaGrid'
 import Unsplash from '../components/Unsplash'
+import { useBoardGamesLazyQuery } from '../schemas/boardGame.graphql'
 import {
-  BoardGamesQuery,
-  useBoardGamesLazyQuery,
-} from '../schemas/boardGame.graphql'
+  getKey,
+  getTitle,
+  getDescription,
+  getImageUrl,
+} from '../utils/boardGame'
 
 export default function Index(): JSX.Element {
 
@@ -75,11 +76,15 @@ export default function Index(): JSX.Element {
           </form>
         </Container>
       </div>
-      {/* TODO: Use skeleton when loading */}
-      {boardGameResult.called && routerQuery ?
-        (
-          <Body boardGames={boardGameResult.data?.boardGames} />
-        ) : (
+      {/* TODO: Provide a message when there are no games */}
+      <MediaGrid
+        data={boardGameResult.data?.boardGames}
+        isLoading={boardGameResult.loading}
+        getKey={getKey}
+        getTitle={getTitle}
+        getDescription={getDescription}
+        getImageUrl={getImageUrl}
+        NotCalled={
           <Unsplash
             username="jacielmelnik"
             fullName="Jaciel Melnik"
@@ -90,39 +95,11 @@ export default function Index(): JSX.Element {
             height={359}
             priority
           />
-        )
-      }
+        }
+      />
     </React.Fragment>
   )
 }
-
-interface BodyProps {
-  boardGames?: BoardGame[]
-}
-
-function Body(props: BodyProps): JSX.Element {
-
-  const renderBoardGame = React.useCallback((boardGame: BoardGame): JSX.Element => {
-    return (
-      <Grid item xs={12} sm={6} md={4} key={boardGame.id}>
-        <MediaCard
-          title={he.decode(boardGame.name)}
-          description={he.decode(boardGame.description)}
-          imageUrl={boardGame.imageUrl}
-        />
-      </Grid>
-    )
-  }, [])
-
-  return (
-    <Grid container spacing={4}>
-      {/* TODO: Provide a message when there are no games */}
-      {props.boardGames?.map(renderBoardGame)}
-    </Grid>
-  )
-}
-
-type BoardGame = BoardGamesQuery['boardGames'][0]
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Media Grid should show the Empty node if the data list is empty 1`] = `
+<div>
+  Empty
+</div>
+`;
+
+exports[`Media Grid should show the Not Called node if there's no data 1`] = `
+<div>
+  Not Called
+</div>
+`;

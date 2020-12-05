@@ -6,7 +6,7 @@ import {
   BoardGamesQueryVariables,
 } from '../boardGame.graphql'
 
-const catan: BoardGame = {
+export const catan: BoardGame = {
   __typename: 'BoardGame',
   id: '13',
   name: 'Catan',
@@ -17,7 +17,7 @@ const catan: BoardGame = {
   imageUrl: 'https://cf.geekdo-images.com/W3Bsga_uLP9kO91gZ7H8yw__original/img/A-0yDJkve0avEicYQ4HoNO-HkK8=/0x0/pic2419375.jpg',
 }
 
-const catanFirstAdventure: BoardGame = {
+export const catanFirstAdventure: BoardGame = {
   __typename: 'BoardGame',
   id: '325333',
   name: 'Catan: First Adventure Print &amp; Play',
@@ -26,6 +26,17 @@ const catanFirstAdventure: BoardGame = {
   maximumAmountOfPlayers: 4,
   thumbnailUrl: null,
   imageUrl: null,
+}
+
+export const sevenWondersCatan: BoardGame = {
+  __typename: 'BoardGame',
+  id: '110308',
+  name: '7 Wonders: Catan',
+  description: '7 Wonders: Catan is a mini-expansion for the 2011 Kennerspiel des Jahres winner 7 Wonders that pays homage to the SdJ poster child The Settlers of Catan. 7 Wonders: Catan debuted at Spiel 2011 with all funds collected from sale of the expansion being donated to Aktion Deutschland Hilft.&amp;#10;&amp;#10;Contents:&amp;#10;1x Wonder cardboard&amp;#10;1x Wonder randomizer card&amp;#10;1x &amp;quot;Klaus Teuber\'s note (advertisment mostly)&amp;#10;all wrapped in shrinkwrap.&amp;#10;&amp;#10;',
+  minimumAmountOfPlayers: 2,
+  maximumAmountOfPlayers: 7,
+  thumbnailUrl: 'https://cf.geekdo-images.com/F99j2tOu97d_ekn3D1GGAQ__thumb/img/yOuyBE7eAPQ8b2dxzZzsz575eqE=/fit-in/200x150/filters:strip_icc()/pic1115825.jpg',
+  imageUrl: 'https://cf.geekdo-images.com/F99j2tOu97d_ekn3D1GGAQ__original/img/-jTNZl6eOV9PLHGSpkjSO772xMs=/0x0/pic1115825.jpg',
 }
 
 type MockedBoardGames = MockedResponse<BoardGamesQuery, BoardGamesQueryVariables>
