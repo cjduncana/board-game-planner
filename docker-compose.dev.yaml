@@ -1,0 +1,18 @@
+version: "3.1"
+services:
+  mysql-dev:
+    image: 'mysql:8.0.20'
+    ports:
+      - '3310:3306'
+    environment:
+      - MYSQL_DATABASE=board_game_planner_dev
+      - MYSQL_ROOT_PASSWORD=mysqlPassword
+    volumes:
+      - ./database:/var/lib/mysql
+  mysql-test:
+    image: 'mysql:8.0.20'
+    ports:
+      - '3311:3306'
+    environment:
+      - MYSQL_DATABASE=board_game_planner_test
+      - MYSQL_ROOT_PASSWORD=mysqlPassword

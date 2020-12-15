@@ -1,4 +1,5 @@
 import 'fontsource-roboto'
+import 'reflect-metadata'
 
 import { ApolloProvider } from '@apollo/client'
 import AppBar from '@material-ui/core/AppBar'

@@ -11,7 +11,7 @@ import { useMemo } from 'react'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined
 
-export type ResolverContext = {
+type ResolverContext = {
   req?: IncomingMessage
   res?: ServerResponse
 }
