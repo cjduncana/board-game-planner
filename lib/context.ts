@@ -5,6 +5,8 @@ import {
 } from 'apollo-server-plugin-base'
 import { Connection, getConnectionManager } from 'typeorm'
 
+import User from '../entities/user'
+
 export interface Context {
   connection: Connection
 }
@@ -51,5 +53,6 @@ function getConnection(): Promise<Connection> {
     password: process.env.DB_PASS,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : undefined,
+    entities: [User],
   }).connect()
 }

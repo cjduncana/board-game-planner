@@ -2,3 +2,17 @@ type Query {
   "Search for Board Games based on given query"
   boardGames(query: String!): [BoardGame!]!
 }
+
+type Mutation {
+  "Create a new User"
+  createUser(input: CreateUserInput!): User!
+}
+
+input CreateUserInput {
+  "New User's name"
+  name: String!
+  "New User's unique email address"
+  email: String!
+  "New User's password"
+  password: String!
+}
