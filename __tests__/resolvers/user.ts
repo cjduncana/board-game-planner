@@ -4,7 +4,7 @@ import UserEntity from '../../entities/user'
 import { CreateUser1607941140537 as CreateUser } from '../../migrations/1607941140537-CreateUser'
 import UserRepository from '../../repositories/user'
 import { createUser, login } from '../../resolvers/user'
-import { CreateUserInput, QueryLoginArgs, User } from '../../schemas/type-defs.graphqls'
+import { CreateUserInput, QueryLoginArgs } from '../../schemas/type-defs.graphqls'
 
 describe('User resolvers', () => {
 
@@ -46,31 +46,25 @@ describe('User resolvers', () => {
       await userRepo.delete(user.id)
     })
 
-    it('should throw if the user provide an empty name', () => {
+    it('should throw if the user provide an empty name', async () => {
 
-      const error = (): void => {
-        createUser({}, { input: { ...createUserInput, name: '' } })
-      }
+      const error = createUser({}, { input: { ...createUserInput, name: '' } })
 
-      expect(error).toThrow('Empty information')
+      await expect(error).rejects.toThrow('Empty information')
     })
 
-    it('should throw if the user provide an empty email', () => {
+    it('should throw if the user provide an empty email', async () => {
 
-      const error = (): void => {
-        createUser({}, { input: { ...createUserInput, email: '' } })
-      }
+      const error = createUser({}, { input: { ...createUserInput, email: '' } })
 
-      expect(error).toThrow('Empty information')
+      await expect(error).rejects.toThrow('Empty information')
     })
 
-    it('should throw if the user provide an empty password', () => {
+    it('should throw if the user provide an empty password', async () => {
 
-      const error = (): void => {
-        createUser({}, { input: { ...createUserInput, password: '' } })
-      }
+      const error = createUser({}, { input: { ...createUserInput, password: '' } })
 
-      expect(error).toThrow('Empty information')
+      await expect(error).rejects.toThrow('Empty information')
     })
 
     it('should throw if the database does contain the same email', async () => {
@@ -79,9 +73,7 @@ describe('User resolvers', () => {
       const { name, email, password } = createUserInput
       const user = await userRepo.createUser(name, email, password)
 
-      const error = (): Promise<User> => {
-        return createUser({}, { input: createUserInput })
-      }
+      const error = createUser({}, { input: createUserInput })
 
       await expect(error).rejects.toThrow('Duplicate email address')
 

@@ -10,7 +10,7 @@ import {
   User,
 } from '../schemas/type-defs.graphqls'
 
-export function createUser<Parent>(
+export async function createUser<Parent>(
   _parent: Parent,
   { input }: MutationCreateUserArgs,
 ): Promise<User> {
@@ -19,17 +19,20 @@ export function createUser<Parent>(
     throw new UserInputError('Empty information', input)
   }
 
-  // TODO: Turn into an async function
-  return getCustomRepository(UserRepository)
-    .createUser(input.name, input.email, input.password)
-    .catch((error) => {
+  const userRepo = getCustomRepository(UserRepository)
 
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw new UserInputError('Duplicate email address', input)
-      }
+  try {
+    const user = await userRepo.createUser(input.name, input.email, input.password)
 
-      throw error
-    })
+    return user
+  } catch (error) {
+
+    if (error.code === 'ER_DUP_ENTRY') {
+      throw new UserInputError('Duplicate email address', input)
+    }
+
+    throw error
+  }
 }
 
 export async function login<Parent>(_parent: Parent, args: QueryLoginArgs): Promise<LoginResult> {
