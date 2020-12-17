@@ -1,6 +1,8 @@
 type Query {
   "Search for Board Games based on given query"
   boardGames(query: String!): [BoardGame!]!
+  "Authenticate with an email address and a password"
+  login(email: String!, password: String!): LoginResult!
 }
 
 type Mutation {
@@ -15,4 +17,9 @@ input CreateUserInput {
   email: String!
   "New User's password"
   password: String!
+}
+
+type LoginResult {
+  user: User!
+  token: String!
 }

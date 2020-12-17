@@ -3,8 +3,8 @@ import * as TypeORM from 'typeorm'
 import UserEntity from '../../entities/user'
 import { CreateUser1607941140537 as CreateUser } from '../../migrations/1607941140537-CreateUser'
 import UserRepository from '../../repositories/user'
-import { createUser } from '../../resolvers/user'
-import { CreateUserInput, User } from '../../schemas/type-defs.graphqls'
+import { createUser, login } from '../../resolvers/user'
+import { CreateUserInput, QueryLoginArgs, User } from '../../schemas/type-defs.graphqls'
 
 describe('User resolvers', () => {
 
@@ -102,10 +102,70 @@ describe('User resolvers', () => {
       getCustomRepositorySpy.mockRestore()
     })
   })
+
+  describe('#login', () => {
+
+    beforeAll(async () => {
+      const userRepo = TypeORM.getCustomRepository(UserRepository)
+      const { name, email, password } = createUserInput
+      await userRepo.createUser(name, email, password)
+    })
+
+    afterAll(async () => {
+      const userRepo = TypeORM.getCustomRepository(UserRepository)
+      const { email } = createUserInput
+      await userRepo.delete({ email })
+    })
+
+    it('should return a User and a token if the user gave the correct credentials', async () => {
+
+      const { user, token } = await login({}, queryLoginArgs)
+
+      expect(user).toMatchObject({
+        id: expect.any(String),
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+      })
+
+      expect(typeof token).toEqual('string')
+    })
+
+    it('should throw if the user provide an empty email', async () => {
+
+      const error = login({}, { ...queryLoginArgs, email: '' })
+
+      await expect(error).rejects.toThrow('Empty information')
+    })
+
+    it('should throw if the user provide an empty password', async () => {
+
+      const error = login({}, { ...queryLoginArgs, password: '' })
+
+      await expect(error).rejects.toThrow('Empty information')
+    })
+
+    it('should throw if the user provide the wrong email', async () => {
+
+      const error = login({}, { ...queryLoginArgs, email: 'wrong' })
+
+      await expect(error).rejects.toThrow('Invalid email address or password')
+    })
+
+    it('should throw if the user provide the wrong password', async () => {
+
+      const error = login({}, { ...queryLoginArgs, password: 'wrong' })
+
+      await expect(error).rejects.toThrow('Invalid email address or password')
+    })
+  })
 })
 
-const createUserInput: CreateUserInput = {
-  name: 'John Doe',
+const queryLoginArgs: QueryLoginArgs = {
   email: 'john.doe@example.com',
   password: 'password',
+}
+
+const createUserInput: CreateUserInput = {
+  ...queryLoginArgs,
+  name: 'John Doe',
 }

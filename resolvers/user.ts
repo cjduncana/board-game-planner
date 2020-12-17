@@ -1,8 +1,14 @@
 import { UserInputError } from 'apollo-server-micro'
+import jwt from 'jsonwebtoken'
 import { getCustomRepository } from 'typeorm'
 
 import UserRepository from '../repositories/user'
-import { MutationCreateUserArgs, User } from '../schemas/type-defs.graphqls'
+import {
+  LoginResult,
+  MutationCreateUserArgs,
+  QueryLoginArgs,
+  User,
+} from '../schemas/type-defs.graphqls'
 
 export function createUser<Parent>(
   _parent: Parent,
@@ -13,6 +19,7 @@ export function createUser<Parent>(
     throw new UserInputError('Empty information', input)
   }
 
+  // TODO: Turn into an async function
   return getCustomRepository(UserRepository)
     .createUser(input.name, input.email, input.password)
     .catch((error) => {
@@ -23,4 +30,23 @@ export function createUser<Parent>(
 
       throw error
     })
+}
+
+export async function login<Parent>(_parent: Parent, args: QueryLoginArgs): Promise<LoginResult> {
+
+  if (!args.email || !args.password) {
+    throw new UserInputError('Empty information', args)
+  }
+
+  const userRepo = getCustomRepository(UserRepository)
+
+  try {
+    const user = await userRepo.validate(args.email, args.password)
+
+    const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET as string)
+
+    return { user, token }
+  } catch (error) {
+    throw new UserInputError('Invalid email address or password', args)
+  }
 }

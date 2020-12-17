@@ -12,4 +12,12 @@ export default class User extends Repository<UserEntity> {
 
     return this.save({ name, email, passwordHash: hash })
   }
+
+  public async validate(email: string, password: string): Promise<UserEntity> {
+    const user = await this.findOneOrFail({ email })
+
+    const isValid = await bcrypt.compare(password, user.passwordHash)
+
+    return isValid ? user : Promise.reject('Not a valid password')
+  }
 }
