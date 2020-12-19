@@ -1,19 +1,22 @@
+import { IncomingMessage } from 'http'
+
 import {
   ApolloServerPlugin,
   GraphQLServiceContext,
   GraphQLServerListener,
 } from 'apollo-server-plugin-base'
+import jwt from 'jsonwebtoken'
 import { Connection, getConnectionManager } from 'typeorm'
 
+import Event from '../entities/event'
 import User from '../entities/user'
 
 export interface Context {
-  connection: Connection
+  userId?: string
 }
 
-export function createContext(): Context {
-  const connectionManager = getConnectionManager()
-  return { connection: connectionManager.get(CONNECTION_NAME) }
+export function createContext({ req }: { req: IncomingMessage }): Context {
+  return { userId: getUserId(req.headers.authorization) }
 }
 
 const CONNECTION_NAME = 'default'
@@ -53,6 +56,24 @@ function getConnection(): Promise<Connection> {
     password: process.env.DB_PASS,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : undefined,
-    entities: [User],
+    entities: [Event, User],
   }).connect()
+}
+
+function getUserId(token?: string): string | undefined {
+  if (!token) {
+    return undefined
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string)
+
+    if (typeof decoded !== 'string') {
+      return (decoded as { sub?: string }).sub
+    }
+
+    return undefined
+  } catch (error) {
+    return undefined
+  }
 }

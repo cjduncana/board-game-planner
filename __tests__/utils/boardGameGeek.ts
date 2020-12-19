@@ -1,16 +1,11 @@
 import fetchMock from 'fetch-mock'
 
-import {
-  boardGameById,
-  catanIds,
-  emptyItems,
-  itemWrapper,
-  pandemicId,
-} from '../../__mocks__/xml'
+import { catanIds, emptyItems, pandemicId } from '../../__mocks__/xml'
 import {
   fetchBoardGamesById,
   searchBoardGameIds,
 } from '../../utils/boardGameGeek'
+import { addBoardGameThingMock } from '../../utils/testHelpers'
 import Url from '../../utils/urls'
 
 describe('Board Game Geek utility', () => {
@@ -112,22 +107,7 @@ describe('Board Game Geek utility', () => {
   })
 })
 
-fetchMock
+addBoardGameThingMock(fetchMock)
   .get(`${Url.BOARD_GAME_SEARCH}&query=Empty`, emptyItems)
   .get(`${Url.BOARD_GAME_SEARCH}&query=Pandemic`, pandemicId)
   .get(`${Url.BOARD_GAME_SEARCH}&query=Catan`, catanIds)
-  .mock({
-    method: 'GET',
-    url: `begin:${Url.BOARD_GAME_THING}`,
-    response: (url) => {
-      const boardGames = url
-        .replace(`${Url.BOARD_GAME_THING}?id=`, '')
-        .split(',')
-        .reduce((acc, id) => {
-          const boardGame = boardGameById[id]
-          return boardGame ? [...acc, boardGame] : acc
-        }, [] as string[])
-
-      return itemWrapper(boardGames.join('\n'))
-    },
-  })

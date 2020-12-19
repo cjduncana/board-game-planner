@@ -1,0 +1,13 @@
+type Event {
+  id: ID!
+  creator: User!
+  startTime: String!
+  location: Coordinate!
+  players: [User!]!
+  games: [BoardGame!]!
+}
+
+type Coordinate {
+  latitude: Float!
+  longitude: Float!
+}

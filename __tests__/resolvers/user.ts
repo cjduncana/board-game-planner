@@ -1,38 +1,28 @@
 import * as TypeORM from 'typeorm'
 
+import getMockUser from '../../entities/__mocks__/user'
 import UserEntity from '../../entities/user'
-import { CreateUser1607941140537 as CreateUser } from '../../migrations/1607941140537-CreateUser'
 import UserRepository from '../../repositories/user'
 import { createUser, login } from '../../resolvers/user'
 import { CreateUserInput, QueryLoginArgs } from '../../schemas/type-defs.graphqls'
+import { closeConnection, createConnection } from '../../utils/testHelpers'
 
 describe('User resolvers', () => {
 
+  let mockUser: UserEntity
+  let userRepo: UserRepository
+
   beforeAll(async () => {
-    await TypeORM.createConnection({
-      type: 'mysql',
-      database: 'board_game_planner_test',
-      username: 'root',
-      password: 'mysqlPassword',
-      host: '127.0.0.1',
-      port: 3311,
-      dropSchema: true,
-      entities: [UserEntity],
-      migrations: [CreateUser],
-      migrationsRun: true,
-      logging: false,
-    })
+    await createConnection()
+    userRepo = TypeORM.getCustomRepository(UserRepository)
+    mockUser = getMockUser()
   })
 
-  afterAll(async () => {
-    const connection = TypeORM.getConnection()
-    await connection.dropDatabase()
-    await connection.close()
-  })
+  afterAll(closeConnection)
 
   describe('#createUser', () => {
 
-    it('should return a User if the database does not contain the same email', async () => {
+    it('should return a new User if the database does not contain the same email', async () => {
 
       const user = await createUser({}, { input: createUserInput })
 
@@ -42,7 +32,6 @@ describe('User resolvers', () => {
         email: 'john.doe@example.com',
       })
 
-      const userRepo = TypeORM.getCustomRepository(UserRepository)
       await userRepo.delete(user.id)
     })
 
@@ -69,9 +58,7 @@ describe('User resolvers', () => {
 
     it('should throw if the database does contain the same email', async () => {
 
-      const userRepo = TypeORM.getCustomRepository(UserRepository)
-      const { name, email, password } = createUserInput
-      const user = await userRepo.createUser(name, email, password)
+      const user = await userRepo.save(mockUser)
 
       const error = createUser({}, { input: createUserInput })
 
@@ -97,17 +84,9 @@ describe('User resolvers', () => {
 
   describe('#login', () => {
 
-    beforeAll(async () => {
-      const userRepo = TypeORM.getCustomRepository(UserRepository)
-      const { name, email, password } = createUserInput
-      await userRepo.createUser(name, email, password)
-    })
+    beforeAll(() => userRepo.save(mockUser))
 
-    afterAll(async () => {
-      const userRepo = TypeORM.getCustomRepository(UserRepository)
-      const { email } = createUserInput
-      await userRepo.delete({ email })
-    })
+    afterAll(() => userRepo.delete(mockUser.id))
 
     it('should return a User and a token if the user gave the correct credentials', async () => {
 

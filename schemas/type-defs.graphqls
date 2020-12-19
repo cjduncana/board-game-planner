@@ -6,8 +6,20 @@ type Query {
 }
 
 type Mutation {
+  "Create a new Event"
+  createEvent(input: CreateEventInput!): Event!
   "Create a new User"
   createUser(input: CreateUserInput!): User!
+}
+
+input CreateEventInput {
+  "When the Event is going to start"
+  startTime: String!
+  "Where the Event is taking place"
+  latitude: Float!
+  longitude: Float!
+  "The games available in the Event"
+  gameIds: [ID!]!
 }
 
 input CreateUserInput {
