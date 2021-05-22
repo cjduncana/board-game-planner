@@ -47,7 +47,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "0.2.22"
+    "typeorm": "0.2.25"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
